@@ -57,6 +57,6 @@ for host in r:
 r = json.dumps(promExport, default=set_default, ensure_ascii=False)
 
 if r is not None:
-    f = open('targets.json', 'w')
+    f = open('targets/targets.json', 'w')
     f.write(r)
     f.close()
