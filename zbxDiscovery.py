@@ -1,4 +1,4 @@
-import json, os
+import json, os, time
 from zabbix.api import ZabbixAPI
 
 # if {'ZABBIXURL', 'ZABBIXUSERNAME', 'ZABBIXPASSWORD'} not in os.environ:
@@ -60,3 +60,4 @@ if r is not None:
     f = open('targets/targets.json', 'w')
     f.write(r)
     f.close()
+    time.sleep(600)
