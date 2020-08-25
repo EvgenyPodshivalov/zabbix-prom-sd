@@ -22,6 +22,8 @@ def zabbixGetHosts():
                 "name"
             ],
             "selectTags" : [
+                "tag",
+                "value"
             ],
             "monitored_hosts": 1
         }
