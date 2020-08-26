@@ -51,6 +51,7 @@ for host in r:
     for row in zbxDiscovery:
         if row['interfaces'][0]['ip'] == host:
             labels.update({'hostname': row['host']})
+            labels.update({'hostid': row['hostid']})
             gr = list ()
             for label in row['groups']: gr.append(label['name'])
             labels.update({'group': '|'.join(gr)})            
@@ -62,4 +63,3 @@ if r is not None:
     f = open('targets/targets.json', 'w')
     f.write(r)
     f.close()
-    time.sleep(600)

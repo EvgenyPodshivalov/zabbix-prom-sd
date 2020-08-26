@@ -8,4 +8,4 @@ RUN apt -y install libsasl2-dev python-dev libldap2-dev libssl-dev
 COPY . /app
 RUN pip3 install --requirement /app/requirements.txt
 
-CMD [ "python", "./zbxDiscovery.py" ]
+CMD [ "sleep 60", "&&", "python", "./zbxDiscovery.py" ]
