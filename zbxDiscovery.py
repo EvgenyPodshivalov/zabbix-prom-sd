@@ -52,9 +52,9 @@ for host in r:
         if row['interfaces'][0]['ip'] == host:
             labels.update({'hostname': row['host']})
             labels.update({'hostid': row['hostid']})
-            labels.update(row['tags'])
             gr = list ()
             for label in row['groups']: gr.append(label['name'])
+            for tag in row['tags']: labels.update({tag['tag']: tag['value']})
             labels.update({'group': '|'.join(gr)})            
     promExport.append({'targets': [host], 'labels': labels})
 
