@@ -1,4 +1,4 @@
-import json, os, time
+import json, os
 from zabbix.api import ZabbixAPI
 
 # if {'ZABBIXURL', 'ZABBIXUSERNAME', 'ZABBIXPASSWORD'} not in os.environ:
@@ -52,6 +52,7 @@ for host in r:
         if row['interfaces'][0]['ip'] == host:
             labels.update({'hostname': row['host']})
             labels.update({'hostid': row['hostid']})
+            labels.update(row['tags'])
             gr = list ()
             for label in row['groups']: gr.append(label['name'])
             labels.update({'group': '|'.join(gr)})            
