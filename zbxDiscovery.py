@@ -3,6 +3,7 @@ from zabbix.api import ZabbixAPI
 
 for envKey in ['ZABBIXURL', 'ZABBIXUSERNAME', 'ZABBIXPASSWORD']:
     if envKey not in list(os.environ.keys()):
+        print('No env ' + envKey)
         raise SystemExit(1)
 
 #Get Zabbix API Info
