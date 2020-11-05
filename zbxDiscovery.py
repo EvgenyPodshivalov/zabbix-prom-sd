@@ -48,6 +48,9 @@ def set_default(obj):
 
 zbxDiscovery = zabbixGetHosts(proxy = 0 if os.environ.get('ZABBIXPROXY') == '' else os.environ.get('ZABBIXPROXY'))
 
+if zbxDiscovery is None:
+    print('Failed get zabbix data')
+
 r = dict()
 promExport = list()
 
@@ -73,3 +76,6 @@ if r is not None:
     f = open('targets/targets.json', 'w')
     f.write(r)
     f.close()
+    print('Targes file writed')
+else:
+    print('Failed write to file')
