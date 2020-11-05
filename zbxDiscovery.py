@@ -1,13 +1,14 @@
 import json, os
 from zabbix.api import ZabbixAPI
 
-# if {'ZABBIXURL', 'ZABBIXUSERNAME', 'ZABBIXPASSWORD'} not in os.environ:
-#     raise SystemExit(1)
+for envKey in ['ZABBIXURL', 'ZABBIXUSERNAME', 'ZABBIXPASSWORD']:
+    if envKey not in list(os.environ.keys()):
+        raise SystemExit(1)
 
 #Get Zabbix API Info
 zapi = ZabbixAPI(url=os.environ.get('ZABBIXURL'), user=os.environ.get('ZABBIXUSERNAME'), password=os.environ.get('ZABBIXPASSWORD'))
 
-def zabbixGetHosts():
+def zabbixGetHosts(proxy=0):
     try:
         result = zapi.do_request('host.get',
         {
@@ -25,6 +26,14 @@ def zabbixGetHosts():
                 "tag",
                 "value"
             ],
+            "selectMacros": [
+                "macro",
+                "value"
+            ],
+            "proxyids": [
+                proxy,
+            ],
+            "selectInventory": ["inventory"],
             "monitored_hosts": 1
         }
         )
@@ -37,14 +46,14 @@ def set_default(obj):
         return list(obj)
     raise TypeError
 
-zbxDiscovery = zabbixGetHosts()
+zbxDiscovery = zabbixGetHosts(proxy = 0 if os.environ.get('ZABBIXPROXY') == '' else os.environ.get('ZABBIXPROXY'))
 
 r = dict()
 promExport = list()
 
 for row in zbxDiscovery:
     r.update({row['interfaces'][0]['ip']: 'labels' })
-del r['127.0.0.1']
+if r.get('127.0.0.1'): del r['127.0.0.1']
 
 for host in r:
     labels = dict()
