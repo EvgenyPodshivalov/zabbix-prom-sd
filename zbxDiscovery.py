@@ -1,10 +1,12 @@
-import json, os
+import json, os, logging
 from zabbix.api import ZabbixAPI
 
 for envKey in ['ZABBIXURL', 'ZABBIXUSERNAME', 'ZABBIXPASSWORD']:
     if envKey not in list(os.environ.keys()):
-        print('No env ' + envKey)
+        logging.error('No env ' + envKey)
         raise SystemExit(1)
+
+logging.basicConfig(level=logging.INFO)
 
 #Get Zabbix API Info
 zapi = ZabbixAPI(url=os.environ.get('ZABBIXURL'), user=os.environ.get('ZABBIXUSERNAME'), password=os.environ.get('ZABBIXPASSWORD'))
@@ -50,7 +52,7 @@ def set_default(obj):
 zbxDiscovery = zabbixGetHosts(proxy = 0 if os.environ.get('ZABBIXPROXY') == '' else os.environ.get('ZABBIXPROXY'))
 
 if zbxDiscovery is None:
-    print('Failed get zabbix data')
+    logging.error('Failed get zabbix data')
 
 r = dict()
 promExport = list()
@@ -77,6 +79,6 @@ if r is not None:
     f = open('targets/targets.json', 'w')
     f.write(r)
     f.close()
-    print('Targes file writed')
+    logging.info('Target file writed')
 else:
-    print('Failed write to file')
+    logging.error('Failed write to file')
