@@ -1,2 +1,2 @@
 # Prometheus Discovery for Zabbix
-This is Service Discovery you can using for discovery hosts from Zabbix system monitoring.
+This is file_sd Prometheus Service Discovery. You can be using it for discovery hosts from Zabbix system monitoring.
