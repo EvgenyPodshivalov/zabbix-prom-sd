@@ -18,6 +18,7 @@ def zabbixGetHosts(proxy=0):
             "output": [
                 "hostid",
                 "host",
+                "name"
             ],
             "selectInterfaces": [
                 "ip"
@@ -66,6 +67,7 @@ for host in r:
     for row in zbxDiscovery:
         if row['interfaces'][0]['ip'] == host:
             labels.update({'hostname': row['host']})
+            labels.update({'visiblename': row['name']})
             labels.update({'hostid': row['hostid']})
             gr = list ()
             for label in row['groups']: gr.append(label['name'])
