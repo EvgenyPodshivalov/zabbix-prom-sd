@@ -1,6 +1,12 @@
 import json, os, logging
 from zabbix.api import ZabbixAPI
 
+#OPTIONAL - Environment variables initialize
+#os.environ['ZABBIXURL'] = 'http://zabbix-server'
+#os.environ['ZABBIXUSERNAME'] = 'username'
+#os.environ['ZABBIXPASSWORD'] = 'passw0rd'
+#os.environ['ZABBIXPROXY'] = ''
+
 logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
 
 for envKey in ['ZABBIXURL', 'ZABBIXUSERNAME', 'ZABBIXPASSWORD']:
